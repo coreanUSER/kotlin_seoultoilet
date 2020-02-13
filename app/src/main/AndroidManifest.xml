@@ -2,7 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.stn.seoultoilet">
 
+    <!--
+        현재 위치를 위한 권한 요청
+        안드로이드가 사용자의 위치를 측정하는 방법은 2가지
+        1. Network: 오차는 크지만 배터리가 적게 사용되고 실내에서도 측정이 가능
+        2. GPS: 오차가 적은 대신 배터리 사용이 크고 실내에서는 측정이 불가능
+
+        ACCESS_COARSE_LOCATION - 네트워크로만 위치를 측정, 배터리 친화적
+        ACCESS_FINE_LOCATION - 네트워크 + GPS 로 배터리 소모는 크지만 정확한 위치 측정
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- 인터넷 사용 권한 요청. 최신 버전에서도 런타임에 체크할 필요 없음 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- 안드로이드 9.0(파이) 버전부터는 usesCleartextTraffic 속성 기본 값이 변해 true 로 설정해야함 -->
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +33,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 구글 클라우드 플랫폼에서 발급받은 API 키 -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+                    android:value="AIzaSyDlvNP8FB2YdiWAyFpVt6907xhTXwVzxZw" />
+        <!-- 구글 플레이 서비스 버전을 적는 곳 -->
+        <meta-data android:name="com.google.android.gms.version"
+                    android:value="@integer/google_play_services_version" />
+        <!-- 안드로이드 파이 버전부터 필요 -->
+        <uses-library android:name="org.apache.http.legacy"
+                    android:required="false" />
+
     </application>
 
 </manifest>
